@@ -33,14 +33,14 @@
 
 (defn get-neighbors [w x y]
   (filter (comp not nil?)
-    [(-> w (get (- y 1)) (get (- x 1)))
-     (-> w (get (- y 1)) (get x))
-     (-> w (get (- y 1)) (get (+ x 1)))
-     (-> w (get y)       (get (- x 1)))
-     (-> w (get y)       (get (+ x 1)))
-     (-> w (get (+ y 1)) (get (- x 1)))
-     (-> w (get (+ y 1)) (get x))
-     (-> w (get (+ y 1)) (get (+ x 1)))]))
+    [(get-in w [(- y 1) (- x 1)])
+     (get-in w [(- y 1) x])
+     (get-in w [(- y 1) (+ x 1)])
+     (get-in w [y       (- x 1)])
+     (get-in w [y       (+ x 1)])
+     (get-in w [(+ y 1) (- x 1)])
+     (get-in w [(+ y 1) x])
+     (get-in w [(+ y 1) (+ x 1)])]))
 
 (defn cell-fate [cell live-neighbors]
   (if (= cell 1)
