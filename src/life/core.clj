@@ -51,7 +51,7 @@
       (or (= live-neighbors 2)
           (= live-neighbors 3)) 1
       ;; Rule 3
-      (> live-neighbors 3)      0
+      (> live-neighbors 3)      0)
     ;; Rule 4
     (if (= live-neighbors 3)
       1
