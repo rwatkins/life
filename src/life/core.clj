@@ -83,7 +83,7 @@
 
 (defn -main
   [& [pattern-name]]
-  (let [t 500
+  (let [t 250
         pattern (or (patterns (keyword pattern-name))
                     (patterns :glider))]
     (loop [w pattern]
