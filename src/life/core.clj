@@ -1,35 +1,33 @@
 (ns life.core
   (:gen-class))
 
-(def WORLD
-  ; Blinker
-  ;[[0 0 0 0 0]
-  ; [0 0 1 0 0]
-  ; [0 0 1 0 0]
-  ; [0 0 1 0 0]
-  ; [0 0 0 0 0]]
-
-  ; Toad
-  ;[[0 0 0 0 0 0]
-  ; [0 0 0 1 0 0]
-  ; [0 1 0 0 1 0]
-  ; [0 1 0 0 1 0]
-  ; [0 0 1 0 0 0]
-  ; [0 0 0 0 0 0]]
-
-  ; Glider
-  [[0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 1 0 0 0 0 0 0 0 0 0]
-   [0 0 0 1 0 0 0 0 0 0 0 0]
-   [0 1 1 1 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]
-   [0 0 0 0 0 0 0 0 0 0 0 0]])
+(def patterns
+  {:blinker
+   [[0 0 0 0 0]
+    [0 0 1 0 0]
+    [0 0 1 0 0]
+    [0 0 1 0 0]
+    [0 0 0 0 0]]
+   :toad
+   [[0 0 0 0 0 0]
+    [0 0 0 1 0 0]
+    [0 1 0 0 1 0]
+    [0 1 0 0 1 0]
+    [0 0 1 0 0 0]
+    [0 0 0 0 0 0]]
+   :glider
+   [[0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 1 0 0 0 0 0 0 0 0 0]
+    [0 0 0 1 0 0 0 0 0 0 0 0]
+    [0 1 1 1 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+    [0 0 0 0 0 0 0 0 0 0 0 0]]})
 
 (defn get-neighbors [w x y]
   (filter (comp not nil?)
@@ -58,10 +56,6 @@
       0)))
 
 (defn next-cell [world x y]
-  {:pre [(= (count world) (count WORLD))
-         (= (count (filter (comp not nil?) (get world 0))) (count (get WORLD 0)))
-         (and (>= x 0) (< x (count (get WORLD 0))))
-         (and (>= y 0) (< y (count WORLD)))]}
   (let [cell (get-in world [y x])
         live-neighbors (filter (comp not zero?) (get-neighbors world x y))]
     (cell-fate cell (count live-neighbors))))
@@ -81,10 +75,6 @@
       (println out))))
 
 (defn tick [world]
-  {:pre  [(= (count world) (count WORLD))
-          (= (count (get world 0)) (count (get WORLD 0)))]
-   :post [(= (count %) (count world))
-          (= (count (get % 0)) (count (get world 0)))]}
   (mapv (fn [row]
           (mapv (fn [[cell [x y]]]
                   (next-cell world x y))
@@ -92,10 +82,12 @@
         (with-coordinates world)))
 
 (defn -main
-  [& args]
-  (let [t 500]
-    (loop [w WORLD]
+  [& [pattern-name]]
+  (let [t 500
+        pattern (or (patterns (keyword pattern-name))
+                    (patterns :glider))]
+    (loop [w pattern]
       (print-world w)
       (println)
       (. Thread (sleep t))
-      (recur (tick w)))))
+      (recur (time (tick w))))))
