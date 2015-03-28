@@ -52,7 +52,6 @@
           (= live-neighbors 3)) 1
       ;; Rule 3
       (> live-neighbors 3)      0
-      :else                     (do (println "Bad things") nil))
     ;; Rule 4
     (if (= live-neighbors 3)
       1
