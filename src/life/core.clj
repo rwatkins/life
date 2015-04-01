@@ -30,15 +30,16 @@
     [0 0 0 0 0 0 0 0 0 0 0 0]]})
 
 (defn get-neighbors [w x y]
-  (filter (comp not nil?)
-    [(get-in w [(- y 1) (- x 1)])
-     (get-in w [(- y 1) x])
-     (get-in w [(- y 1) (+ x 1)])
-     (get-in w [y       (- x 1)])
-     (get-in w [y       (+ x 1)])
-     (get-in w [(+ y 1) (- x 1)])
-     (get-in w [(+ y 1) x])
-     (get-in w [(+ y 1) (+ x 1)])]))
+  (->> [[(- y 1) (- x 1)]
+        [(- y 1) x]
+        [(- y 1) (+ x 1)]
+        [y       (- x 1)]
+        [y       (+ x 1)]
+        [(+ y 1) (- x 1)]
+        [(+ y 1) x]
+        [(+ y 1) (+ x 1)]]
+    (map #(get-in w %))
+    (filter (comp not nil?))))
 
 (defn cell-fate [cell live-neighbors]
   (if (= cell 1)
