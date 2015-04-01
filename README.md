@@ -2,7 +2,7 @@
 
 Conway's Game of Life in Clojure
 
-    $ lein run
+    $ lein run glider
 
         X
           X
