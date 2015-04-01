@@ -1,36 +1,47 @@
 # life
 
-FIXME: description
+Conway's Game of Life in Clojure
 
-## Installation
+    $ lein run
 
-Download from http://example.com/FIXME.
+        X
+          X
+      X X X
 
-## Usage
 
-FIXME: explanation
 
-    $ java -jar life-0.1.0-standalone.jar [args]
+    "Elapsed time: 5.864 msecs"
 
-## Options
 
-FIXME: listing of options this app accepts.
+      X   X
+        X X
+        X
 
-## Examples
 
-...
+    "Elapsed time: 4.693 msecs"
 
-### Bugs
 
-...
+          X
+      X   X
+        X X
 
-### Any Other Sections
-### That You Think
-### Might be Useful
 
-## License
+    "Elapsed time: 9.184 msecs"
 
-Copyright © 2015 FIXME
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+        X
+          X X
+        X X
+
+
+    "Elapsed time: 9.32 msecs"
+
+
+          X
+            X
+        X X X
+
+
+    "Elapsed time: 8.653 msecs"
+
+    ...
