@@ -29,7 +29,7 @@
     [0 0 0 0 0 0 0 0 0 0 0 0]
     [0 0 0 0 0 0 0 0 0 0 0 0]]})
 
-(defn get-neighbors [w x y]
+(defn get-neighbors [world x y]
   (->> [[(- y 1) (- x 1)]
         [(- y 1) x]
         [(- y 1) (+ x 1)]
@@ -38,7 +38,7 @@
         [(+ y 1) (- x 1)]
         [(+ y 1) x]
         [(+ y 1) (+ x 1)]]
-    (map #(get-in w %))
+    (map #(get-in world %))
     (filter (comp not nil?))))
 
 (defn cell-fate [cell live-neighbors]
